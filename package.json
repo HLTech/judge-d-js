@@ -9,7 +9,7 @@
     ],
     "main": "./lib/index.js",
     "bin": {
-        "judge-d": "judge-d.js"
+        "judge-d": "./bin/judge-d.js"
     },
     "files": [
         "bin",
@@ -42,5 +42,9 @@
     "publishConfig": {
         "registry": "https://registry.npmjs.org/",
         "tag": "latest"
+    },
+    "dependencies": {
+        "@types/yargs": "^15.0.13",
+        "yargs": "^15.4.1"
     }
 }
