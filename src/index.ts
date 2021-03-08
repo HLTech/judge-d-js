@@ -1,3 +1,6 @@
+import { defineArgs } from './utils/define-args';
+
 export function run(process: NodeJS.Process) {
-    console.log(process.argv.slice(2));
+    const argv = defineArgs(process.argv.slice(2));
+    console.log(argv);
 }
