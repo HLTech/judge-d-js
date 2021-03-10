@@ -31,9 +31,12 @@
     "homepage": "https://github.com/HLTech/judge-d-js",
     "devDependencies": {
         "@types/jest": "^26.0.20",
+        "@types/mock-fs": "^4.13.0",
         "@types/yargs": "^15.0.13",
+        "factory.ts": "^0.5.1",
         "husky": "^4.3.8",
         "jest": "^26.6.3",
+        "mock-fs": "^4.13.0",
         "prettier": "^2.2.1",
         "pretty-quick": "^3.1.0",
         "ts-jest": "^26.5.2",
@@ -44,6 +47,7 @@
         "tag": "latest"
     },
     "dependencies": {
+        "axios": "^0.21.1",
         "yargs": "^15.4.1"
     }
 }
