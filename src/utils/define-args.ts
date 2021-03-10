@@ -1,13 +1,13 @@
 import yargs from 'yargs';
 
-interface CliArguments {
+export interface CliArguments {
     url: string;
     pactsDir: string;
     serviceName: string;
     serviceVersion: string;
 }
 
-export function defineArgs(cliArgs: string[]): CliArguments {
+export function defineArgs(cliArgs: string[]): yargs.Arguments<CliArguments> {
     return yargs(cliArgs)
         .command<CliArguments>('publish', 'Publish contracts', (yargs) => {
             yargs.options({
