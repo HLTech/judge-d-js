@@ -20,4 +20,12 @@ describe('readPacts', () => {
 
         expect(pacts).toEqual([service1PactMock, service2PactMock]);
     });
+
+    test('throws error when pact directory is empty', () => {
+        mockFs({ './pacts': {} });
+
+        expect(() => readPacts('./pacts')).toThrow(
+            'Pact directory ./pacts is empty.'
+        );
+    });
 });
