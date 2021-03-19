@@ -30,13 +30,13 @@ describe('publish', () => {
                 [pactMockForProviderService1.provider.name]: {
                     rest: {
                         value: JSON.stringify(pactMockForProviderService1),
-                        mimeType: 'application-json',
+                        mimeType: 'application/json',
                     },
                 },
                 [pactMockForProviderService2.provider.name]: {
                     rest: {
                         value: JSON.stringify(pactMockForProviderService2),
-                        mimeType: 'application-json',
+                        mimeType: 'application/json',
                     },
                 },
             },
