@@ -9,7 +9,7 @@ export const serviceContractsFormMockFactory = makeFactory<ServiceContractsForm>
             'provider-service-1': {
                 rest: {
                     value: JSON.stringify(pactMockFactory.build()),
-                    mimeType: 'application-json',
+                    mimeType: 'application/json',
                 },
             },
         },

@@ -11,7 +11,7 @@ export function generateContractsForm(pactFiles: Pact[]): ServiceContractsForm {
                         [fileContent.provider.name]: {
                             rest: {
                                 value: JSON.stringify(fileContent),
-                                mimeType: 'application-json',
+                                mimeType: 'application/json',
                             },
                         },
                     },
@@ -34,6 +34,6 @@ export interface ServiceContractsForm {
 interface RestContract {
     rest: {
         value: string;
-        mimeType: 'application-json';
+        mimeType: 'application/json';
     };
 }
