@@ -13,7 +13,8 @@
     },
     "files": [
         "bin",
-        "lib"
+        "lib",
+        "template"
     ],
     "scripts": {
         "build": "tsc -p tsconfig.json",
@@ -30,6 +31,7 @@
     },
     "homepage": "https://github.com/HLTech/judge-d-js",
     "devDependencies": {
+        "@types/ejs": "^3.0.6",
         "@types/jest": "^26.0.20",
         "@types/mock-fs": "^4.13.0",
         "@types/yargs": "^15.0.13",
@@ -48,6 +50,7 @@
     },
     "dependencies": {
         "axios": "^0.21.1",
+        "ejs": "^3.1.6",
         "yargs": "^15.4.1"
     }
 }
