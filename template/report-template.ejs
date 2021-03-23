@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pact validation report</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
+          integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+    <h1>Pact validation result</h1>
+    <% if (typeof validationResults !== 'undefined' && validationResults.length > 0) { %>
+        <ul class="list-group list-group-flush">
+            <% for(let validation of validationResults) { %>
+                <li class="list-group-item">
+                    <% if (validation.validationStatus === 'FAILED_NO_SUCH_PROVIDER_ON_ENVIRONMENT') { %>
+                        <h3>
+                            Interaction between consumer <%= validation.consumerAndProvider.consumerName %>
+                            and provider <%= validation.consumerAndProvider.providerName %> was <b>not</b> performed due
+                            to lack of provider on environment
+                        </h3>
+                    <% } else { %>
+                        <h5>
+                            Interaction between
+                        </h5>
+                        <h5>
+                            consumer: <%= validation.consumerAndProvider.consumerName %>
+                        </h5>
+                        <h5>
+                            and
+                        </h5>
+                        <h5>
+                            provider: <%= validation.consumerAndProvider.providerName %>
+                        </h5>
+                        <br/>
+                        Consumer version = <%= validation.consumerAndProvider.consumerVersion %><br/>
+                        Provider version = <%= validation.consumerAndProvider.providerVersion %>
+                        <br/>
+                        <br/>
+                        <table class="table table-sm">
+                            <caption>interactions</caption>
+                            <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Interaction name</th>
+                                <th scope="col">Result</th>
+                                <th scope="col">Errors</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <% for(let interaction of validation.interactions) { %>
+                                <% if(interaction.validationResult === "FAILED") { %>
+                                    <% var rowClass = "table-danger" %>
+                                <% } else { %>
+                                    <% var rowClass = "table-success" %>
+                                <% } %>
+                                <tr class=<%= rowClass ;%>>
+                                    <td><%= interaction.interactionName %></td>
+                                    <td><%= interaction.validationResult %></td>
+                                    <td>
+                                        <% if (interaction.errors && interaction.errors.length > 0) { %>
+                                            <% for(let error of interaction.errors) { %>
+                                                <%= error ;%> <br/>
+                                            <% } %>
+                                        <% } else { %>
+                                            -
+                                        <% } %>
+                                    </td>
+                                </tr>
+                            <% } %>
+                            <tbody>
+                        </table>
+                    <% } %>
+                </li>
+            <% } %>
+        </ul>
+    <% } else { %>
+        There were no interactions
+    <% } %>
+</div>
+
+</body>
+</html>

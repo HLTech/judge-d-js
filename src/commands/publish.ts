@@ -1,15 +1,18 @@
 import { generateContractsForm } from '../utils/generate-contracts-form';
-import { CliArguments } from '../utils/define-args';
+import { CliPublishArguments } from '../utils/define-args';
 import { readPacts } from '../utils/read-pacts';
-import { buildUrl } from '../utils/build-url';
 import { postPacts } from '../utils/post-pacts';
+import { URL } from 'url';
 
-export async function publish(argv: CliArguments) {
+export async function publish(argv: CliPublishArguments) {
     const { pactsDir, serviceName, url, serviceVersion } = argv;
 
     const pacts = readPacts(pactsDir);
     const contractsForm = generateContractsForm(pacts);
-    const judgeDUrl = buildUrl(url, serviceName, serviceVersion);
+    const judgeDUrl = new URL(
+        `./contracts/services/${serviceName}/versions/${serviceVersion}`,
+        url
+    ).toString();
 
     await postPacts(judgeDUrl, contractsForm);
 }

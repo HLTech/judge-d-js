@@ -2,7 +2,6 @@ import axios from 'axios';
 import { pactMockFactory } from './mocks/pact.mock';
 import mockFs from 'mock-fs';
 import { publish } from '../src/commands/publish';
-import { buildUrl } from '../src/utils/build-url';
 import { serviceContractsFormMockFactory } from './mocks/serviceContractsForm.mock';
 
 jest.mock('axios');
@@ -45,7 +44,6 @@ describe('publish', () => {
         const serviceName = 'example-service';
         const serviceVersion = '1.1.0';
         const url = 'http://judge-d.instance.com';
-        const pactsPostUrl = buildUrl(url, serviceName, serviceVersion);
 
         await publish({
             url,
@@ -56,7 +54,7 @@ describe('publish', () => {
 
         expect(axios.post).toHaveBeenCalledTimes(1);
         expect(axios.post).toHaveBeenCalledWith(
-            pactsPostUrl,
+            `http://judge-d.instance.com/contracts/services/${serviceName}/versions/${serviceVersion}`,
             serviceContractsFormMock
         );
     });

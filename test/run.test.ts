@@ -1,14 +1,22 @@
+import axios from 'axios';
+import ejs from 'ejs';
 import { run } from '../src';
 import { publish } from '../src/commands/publish';
 import { mocked } from 'ts-jest/utils';
 import { processMockFactory } from './mocks/process.mock';
+import { validationResultMockFactory } from './mocks/validationResult.mock';
 
 jest.mock('../src/commands/publish');
+jest.mock('axios');
+jest.mock('fs');
+jest.mock('ejs');
 
 describe('run', () => {
-    beforeEach(() =>
-        jest.spyOn(console, 'error').mockImplementationOnce(jest.fn())
-    );
+    beforeEach(() => {
+        jest.spyOn(console, 'error').mockImplementationOnce(jest.fn());
+        mocked(ejs.renderFile).mockResolvedValueOnce('html-content');
+    });
+
     test('it invokes publish function with correct arguments', () => {
         const processMock = processMockFactory.build();
 
@@ -51,6 +59,81 @@ describe('run', () => {
         await run(processMock);
 
         expect(console.error).toHaveBeenCalled();
+        expect(processMock.exit).toHaveBeenCalledWith(1);
+    });
+
+    test('it generates report when verify with correct arguments passed', async () => {
+        const validationResultsMock = [validationResultMockFactory.build()];
+        mocked(axios.get).mockResolvedValueOnce({
+            data: validationResultsMock,
+        });
+
+        const processMock = processMockFactory.build({
+            argv: [
+                'node-param',
+                'node-param',
+                'verify',
+                '--url',
+                'https://judge-d.instance.com',
+                '--serviceName',
+                'example-service',
+                '--serviceVersion',
+                '1.0.0',
+                '--environment',
+                'DEMO',
+                '--outFile',
+                './report',
+            ],
+        });
+
+        await run(processMock);
+
+        expect(axios.get).toHaveBeenCalledWith(
+            `https://judge-d.instance.com/environment-compatibility-report/example-service:1.0.0?environment=DEMO`
+        );
+        expect(ejs.renderFile).toHaveBeenCalledWith(
+            './template/report-template.ejs',
+            {
+                validationResults: validationResultsMock,
+            }
+        );
+        expect(processMock.exit).not.toHaveBeenCalled();
+    });
+
+    test('it process exit when command verify is called and one of the interaction failed', async () => {
+        mocked(axios.get).mockResolvedValueOnce({
+            data: [
+                validationResultMockFactory.build({
+                    interactions: [
+                        {
+                            validationResult: 'FAILED',
+                            errors: ['Example error'],
+                        },
+                    ],
+                }),
+            ],
+        });
+
+        const processMock = processMockFactory.build({
+            argv: [
+                'node-param',
+                'node-param',
+                'verify',
+                '--url',
+                'https://judge-d.instance.com',
+                '--serviceName',
+                'example-service',
+                '--serviceVersion',
+                '1.0.0',
+                '--environment',
+                'DEMO',
+                '--outFile',
+                './report',
+            ],
+        });
+
+        await run(processMock);
+
         expect(processMock.exit).toHaveBeenCalledWith(1);
     });
 });
