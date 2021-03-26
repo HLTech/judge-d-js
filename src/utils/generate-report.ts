@@ -1,5 +1,5 @@
 import ejs from 'ejs';
-import fs from 'fs';
+import path from 'path';
 
 type Status = 'OK' | 'FAILED';
 
@@ -18,12 +18,12 @@ export interface ValidationResult {
     }>;
 }
 
-export async function generateReport(
-    outFile: string,
-    validationResults?: ValidationResult[]
-) {
-    let htmlReport = await ejs.renderFile('./template/report-template.ejs', {
+export async function generateReport(validationResults?: ValidationResult[]) {
+    const pathToTemplate = path.resolve(
+        __dirname,
+        '../../template/report-template.ejs'
+    );
+    return ejs.renderFile(pathToTemplate, {
         validationResults,
     });
-    fs.writeFileSync(`${outFile}.html`, htmlReport);
 }

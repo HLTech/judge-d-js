@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`generateReport returns html report with all interactions passed 1`] = `
+"<!DOCTYPE html>
+<html>
+<head>
+    <title>Pact validation report</title>
+
+    <link rel=\\"stylesheet\\" href=\\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css\\"
+          integrity=\\"sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4\\" crossorigin=\\"anonymous\\">
+</head>
+<body>
+
+<div class=\\"container\\">
+    <h1>Pact validation result</h1>
+    
+        <ul class=\\"list-group list-group-flush\\">
+            
+                <li class=\\"list-group-item\\">
+                    
+                        <h5>
+                            Interaction between
+                        </h5>
+                        <h5>
+                            consumer: consumer-name
+                        </h5>
+                        <h5>
+                            and
+                        </h5>
+                        <h5>
+                            provider: provider-name
+                        </h5>
+                        <br/>
+                        Consumer version = consumer-version<br/>
+                        Provider version = provider-version
+                        <br/>
+                        <br/>
+                        <table class=\\"table table-sm\\">
+                            <caption>interactions</caption>
+                            <thead class=\\"thead-dark\\">
+                            <tr>
+                                <th scope=\\"col\\">Interaction name</th>
+                                <th scope=\\"col\\">Result</th>
+                                <th scope=\\"col\\">Errors</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            
+                                
+                                    
+                                
+                                <tr class=table-success>
+                                    <td>interaction name</td>
+                                    <td>OK</td>
+                                    <td>
+                                        
+                                            -
+                                        
+                                    </td>
+                                </tr>
+                            
+                                
+                                    
+                                
+                                <tr class=table-success>
+                                    <td>second interaction</td>
+                                    <td>OK</td>
+                                    <td>
+                                        
+                                            -
+                                        
+                                    </td>
+                                </tr>
+                            
+                            <tbody>
+                        </table>
+                    
+                </li>
+            
+        </ul>
+    
+</div>
+
+</body>
+</html>
+"
+`;
+
+exports[`generateReport returns html report with failed interaction 1`] = `
+"<!DOCTYPE html>
+<html>
+<head>
+    <title>Pact validation report</title>
+
+    <link rel=\\"stylesheet\\" href=\\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css\\"
+          integrity=\\"sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4\\" crossorigin=\\"anonymous\\">
+</head>
+<body>
+
+<div class=\\"container\\">
+    <h1>Pact validation result</h1>
+    
+        <ul class=\\"list-group list-group-flush\\">
+            
+                <li class=\\"list-group-item\\">
+                    
+                        <h5>
+                            Interaction between
+                        </h5>
+                        <h5>
+                            consumer: consumer-name
+                        </h5>
+                        <h5>
+                            and
+                        </h5>
+                        <h5>
+                            provider: provider-name
+                        </h5>
+                        <br/>
+                        Consumer version = consumer-version<br/>
+                        Provider version = provider-version
+                        <br/>
+                        <br/>
+                        <table class=\\"table table-sm\\">
+                            <caption>interactions</caption>
+                            <thead class=\\"thead-dark\\">
+                            <tr>
+                                <th scope=\\"col\\">Interaction name</th>
+                                <th scope=\\"col\\">Result</th>
+                                <th scope=\\"col\\">Errors</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            
+                                
+                                    
+                                
+                                <tr class=table-success>
+                                    <td>interaction name</td>
+                                    <td>OK</td>
+                                    <td>
+                                        
+                                            -
+                                        
+                                    </td>
+                                </tr>
+                            
+                                
+                                    
+                                
+                                <tr class=table-danger>
+                                    <td>failed interaction</td>
+                                    <td>FAILED</td>
+                                    <td>
+                                        
+                                            
+                                                Provider can not be found. <br/>
+                                            
+                                        
+                                    </td>
+                                </tr>
+                            
+                            <tbody>
+                        </table>
+                    
+                </li>
+            
+        </ul>
+    
+</div>
+
+</body>
+</html>
+"
+`;

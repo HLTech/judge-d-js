@@ -5,6 +5,7 @@ import { publish } from '../src/commands/publish';
 import { mocked } from 'ts-jest/utils';
 import { processMockFactory } from './mocks/process.mock';
 import { validationResultMockFactory } from './mocks/validationResult.mock';
+import path from 'path';
 
 jest.mock('../src/commands/publish');
 jest.mock('axios');
@@ -14,7 +15,6 @@ jest.mock('ejs');
 describe('run', () => {
     beforeEach(() => {
         jest.spyOn(console, 'error').mockImplementationOnce(jest.fn());
-        mocked(ejs.renderFile).mockResolvedValueOnce('html-content');
     });
 
     test('it invokes publish function with correct arguments', () => {
@@ -91,12 +91,14 @@ describe('run', () => {
         expect(axios.get).toHaveBeenCalledWith(
             `https://judge-d.instance.com/environment-compatibility-report/example-service:1.0.0?environment=DEMO`
         );
-        expect(ejs.renderFile).toHaveBeenCalledWith(
-            './template/report-template.ejs',
-            {
-                validationResults: validationResultsMock,
-            }
+
+        const pathToTemplate = path.resolve(
+            __dirname,
+            '../template/report-template.ejs'
         );
+        expect(ejs.renderFile).toHaveBeenCalledWith(pathToTemplate, {
+            validationResults: validationResultsMock,
+        });
         expect(processMock.exit).not.toHaveBeenCalled();
     });
 
