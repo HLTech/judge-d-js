@@ -2,6 +2,7 @@ import { defineArgs } from './utils/define-args';
 import { publish } from './commands/publish';
 import { generateReport } from './utils/generate-report';
 import { getValidationResults } from './utils/get-validation-results';
+import fs from 'fs';
 
 export async function run(process: NodeJS.Process) {
     const argv = defineArgs(process.argv.slice(2));
@@ -20,7 +21,8 @@ export async function run(process: NodeJS.Process) {
             );
 
             if (argv.outFile) {
-                await generateReport(argv.outFile, validationResults);
+                const htmlReport = await generateReport(validationResults);
+                fs.writeFileSync(`${argv.outFile}.html`, htmlReport);
             }
 
             if (hasAnyInteractionFailed) {

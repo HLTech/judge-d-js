@@ -14,5 +14,10 @@ export const validationResultMockFactory = makeFactory<ValidationResult>({
             interactionName: 'interaction name',
             errors: [],
         },
+        {
+            validationResult: 'OK',
+            interactionName: 'second interaction',
+            errors: [],
+        },
     ],
 });
