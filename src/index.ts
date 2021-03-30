@@ -1,8 +1,9 @@
+import axios from 'axios';
 import { defineArgs } from './utils/define-args';
 import { publish } from './commands/publish';
 import { generateReport } from './utils/generate-report';
 import { getValidationResults } from './utils/get-validation-results';
-import fs from 'fs';
+import { writeReport } from './utils/write-report';
 
 export async function run(process: NodeJS.Process) {
     const argv = defineArgs(process.argv.slice(2));
@@ -22,7 +23,8 @@ export async function run(process: NodeJS.Process) {
 
             if (argv.outFile) {
                 const htmlReport = await generateReport(validationResults);
-                fs.writeFileSync(`${argv.outFile}.html`, htmlReport);
+
+                writeReport(argv.outFile, htmlReport);
             }
 
             if (hasAnyInteractionFailed) {
@@ -31,7 +33,7 @@ export async function run(process: NodeJS.Process) {
             }
         }
     } catch (error) {
-        if (error.isAxiosError) {
+        if (axios.isAxiosError(error)) {
             console.error('Error', error.toJSON());
         } else {
             console.error(error);

@@ -1,11 +1,12 @@
 import axios from 'axios';
 import ejs from 'ejs';
+import path from 'path';
+import fs from 'fs';
 import { run } from '../src';
 import { publish } from '../src/commands/publish';
 import { mocked } from 'ts-jest/utils';
 import { processMockFactory } from './mocks/process.mock';
 import { validationResultMockFactory } from './mocks/validationResult.mock';
-import path from 'path';
 
 jest.mock('../src/commands/publish');
 jest.mock('axios');
@@ -62,7 +63,7 @@ describe('run', () => {
         expect(processMock.exit).toHaveBeenCalledWith(1);
     });
 
-    test('it generates report when verify with correct arguments passed', async () => {
+    test('it generates report when verify is called with correct arguments', async () => {
         const validationResultsMock = [validationResultMockFactory.build()];
         mocked(axios.get).mockResolvedValueOnce({
             data: validationResultsMock,
@@ -82,7 +83,7 @@ describe('run', () => {
                 '--environment',
                 'DEMO',
                 '--outFile',
-                './report',
+                './report/dredd/contract-tests-report',
             ],
         });
 
@@ -96,6 +97,10 @@ describe('run', () => {
             __dirname,
             '../template/report-template.ejs'
         );
+
+        expect(fs.mkdirSync).toHaveBeenCalledWith('./report/dredd', {
+            recursive: true,
+        });
         expect(ejs.renderFile).toHaveBeenCalledWith(pathToTemplate, {
             validationResults: validationResultsMock,
         });
