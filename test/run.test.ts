@@ -68,6 +68,7 @@ describe('run', () => {
         mocked(axios.get).mockResolvedValueOnce({
             data: validationResultsMock,
         });
+        mocked(ejs.renderFile).mockResolvedValueOnce('report content');
 
         const processMock = processMockFactory.build({
             argv: [
@@ -83,7 +84,7 @@ describe('run', () => {
                 '--environment',
                 'DEMO',
                 '--outFile',
-                './report/dredd/contract-tests-report',
+                './report/dredd/contract-tests-report.html',
             ],
         });
 
@@ -104,6 +105,10 @@ describe('run', () => {
         expect(ejs.renderFile).toHaveBeenCalledWith(pathToTemplate, {
             validationResults: validationResultsMock,
         });
+        expect(fs.writeFileSync).toHaveBeenCalledWith(
+            './report/dredd/contract-tests-report.html',
+            'report content'
+        );
         expect(processMock.exit).not.toHaveBeenCalled();
     });
 
