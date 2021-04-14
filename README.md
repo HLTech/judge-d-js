@@ -49,13 +49,13 @@ $ judge-d verify --help
 ```
 
 ```
-Verify contracts
+It verifies contracts and generates HTML report if outFile is provided
 
 Options:
   --url             Url to judge-d instance                  [string] [required]
   --serviceName     Service name                             [string] [required]
   --serviceVersion  Service version                          [string] [required]
   --environment     Environment name                         [string] [required]
-  --outFile         Path with HTML report filename                      [string]
+  --outFile         Path with HTML report filename, ex. report.html     [string]
 
 ```

@@ -61,7 +61,7 @@ export function defineArgs(
                 },
                 outFile: {
                     type: 'string',
-                    describe: 'Path with HTML report filename',
+                    describe: 'Path with HTML report filename, ex. report.html',
                 },
             });
         })

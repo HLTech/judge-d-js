@@ -6,5 +6,5 @@ export function writeReport(outFile: string, htmlReport: string) {
     if (!fs.existsSync(pathToReportDir)) {
         fs.mkdirSync(pathToReportDir, { recursive: true });
     }
-    fs.writeFileSync(`${outFile}.html`, htmlReport);
+    fs.writeFileSync(outFile, htmlReport);
 }
