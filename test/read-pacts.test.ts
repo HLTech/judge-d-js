@@ -1,6 +1,7 @@
 import { readPacts } from '../src/utils/read-pacts';
 import { pactMockFactory } from './mocks/pact.mock';
 import mockFs from 'mock-fs';
+import path from 'path';
 
 describe('readPacts', () => {
     test('returns correctly read pact files', () => {
@@ -26,6 +27,39 @@ describe('readPacts', () => {
 
         expect(() => readPacts('./pacts')).toThrow(
             'Pact directory ./pacts is empty.'
+        );
+    });
+
+    test('throws error when pact interactions array is empty', () => {
+        mockFs({
+            './pacts': {
+                'service-pact.json': JSON.stringify(
+                    pactMockFactory.build({
+                        provider: {
+                            name: 'provider-service',
+                        },
+                        interactions: [],
+                    })
+                ),
+                'another-service-pact.json': JSON.stringify(
+                    pactMockFactory.build({
+                        provider: {
+                            name: 'another-provider-service',
+                        },
+                        interactions: [],
+                    })
+                ),
+            },
+        });
+
+        const anotherProviderServicePath = path.join(
+            './pacts',
+            'another-service-pact.json'
+        );
+        const providerServicePath = path.join('./pacts', 'service-pact.json');
+
+        expect(() => readPacts('./pacts')).toThrow(
+            `Pact interactions for provider: another-provider-service in pact file ${anotherProviderServicePath} are empty.\nPact interactions for provider: provider-service in pact file ${providerServicePath} are empty.`
         );
     });
 });
