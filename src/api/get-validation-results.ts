@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { CliVerifyArguments } from './define-args';
-import { ValidationResult } from './generate-report';
+import { CliVerifyArguments } from '../utils/define-args';
+import { ValidationResult } from '../utils/generate-report';
 import { stringify } from 'querystring';
 import { URL } from 'url';
 
