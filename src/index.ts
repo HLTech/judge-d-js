@@ -2,7 +2,7 @@ import axios from 'axios';
 import { defineArgs } from './utils/define-args';
 import { publish } from './commands/publish';
 import { generateReport } from './utils/generate-report';
-import { getValidationResults } from './utils/get-validation-results';
+import { getValidationResults } from './api/get-validation-results';
 import { writeReport } from './utils/write-report';
 
 export async function run(process: NodeJS.Process) {

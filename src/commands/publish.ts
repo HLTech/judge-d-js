@@ -1,7 +1,7 @@
 import { generateContractsForm } from '../utils/generate-contracts-form';
 import { CliPublishArguments } from '../utils/define-args';
 import { readPacts } from '../utils/read-pacts';
-import { postPacts } from '../utils/post-pacts';
+import { postPacts } from '../api/post-pacts';
 import { URL } from 'url';
 
 export async function publish(argv: CliPublishArguments) {
