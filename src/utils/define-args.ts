@@ -7,7 +7,8 @@ export interface CliArguments {
 }
 
 export interface CliPublishArguments extends CliArguments {
-    pactsDir: string;
+    pactsDir?: string;
+    swaggerFile?: string;
 }
 
 export interface CliVerifyArguments extends CliArguments {
@@ -41,14 +42,27 @@ export function defineArgs(
             'publish',
             'Publish contracts',
             (yargs) => {
-                return yargs.options({
-                    ...commonArguments,
-                    pactsDir: {
-                        type: 'string',
-                        demandOption: true,
-                        describe: 'Path to directory with pacts',
-                    },
-                });
+                return yargs
+                    .options({
+                        ...commonArguments,
+                        pactsDir: {
+                            type: 'string',
+                            describe: 'Path to directory with pacts',
+                        },
+                        swaggerFile: {
+                            type: 'string',
+                            describe: 'Path to swagger json file',
+                        },
+                    })
+                    .check(({ pactsDir, swaggerFile }) => {
+                        if (!pactsDir && !swaggerFile) {
+                            throw new Error(
+                                'Either pactsDir or swaggerFile argument must be passed.'
+                            );
+                        }
+
+                        return true;
+                    });
             }
         )
         .command('verify', 'Verify contracts', (yargs) => {
@@ -67,5 +81,6 @@ export function defineArgs(
         })
         .strict()
         .demandCommand(1, 'You need at least one command before moving on')
+        .group(['pactsDir', 'swaggerFile'], 'Required one of:')
         .help().argv;
 }

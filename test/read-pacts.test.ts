@@ -30,6 +30,14 @@ describe('readPacts', () => {
         );
     });
 
+    test('throws error when pact directory does not exist', () => {
+        mockFs();
+
+        expect(() => readPacts('./pacts')).toThrow(
+            "ENOENT: no such file or directory, scandir './pacts'"
+        );
+    });
+
     test('throws error when pact interactions array is empty', () => {
         mockFs({
             './pacts': {

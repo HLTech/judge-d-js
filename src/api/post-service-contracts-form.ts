@@ -1,4 +1,4 @@
-import { ServiceContractsForm } from '../utils/generate-contracts-form';
+import { ServiceContractsForm } from '../types';
 import axios from 'axios';
 
 export function postServiceContractsForm(
