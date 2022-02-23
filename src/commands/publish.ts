@@ -1,7 +1,7 @@
 import { generateContractsForm } from '../utils/generate-contracts-form';
 import { CliPublishArguments } from '../utils/define-args';
 import { readPacts } from '../utils/read-pacts';
-import { postPacts } from '../api/post-pacts';
+import { postServiceContractsForm } from '../api/post-service-contracts-form';
 import { URL } from 'url';
 
 export async function publish(argv: CliPublishArguments) {
@@ -14,5 +14,5 @@ export async function publish(argv: CliPublishArguments) {
         url
     ).toString();
 
-    await postPacts(judgeDUrl, contractsForm);
+    await postServiceContractsForm(judgeDUrl, contractsForm);
 }
