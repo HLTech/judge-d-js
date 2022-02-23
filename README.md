@@ -38,9 +38,12 @@ Publish contracts
 
 Options:
   --url             Url to judge-d instance                  [string] [required]
-  --pactsDir        Path to directory with pacts             [string] [required]
   --serviceName     Service name                             [string] [required]
   --serviceVersion  Service version                          [string] [required]
+
+  Required one of:
+  --pactsDir        Path to directory with pacts             [string]
+  --swaggerFile     Path to swagger json file                [string]
 
 ```
 

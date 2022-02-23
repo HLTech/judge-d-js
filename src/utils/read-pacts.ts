@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { Pact } from '../types';
 
 export function readPacts(dir: string): Pact[] {
     const pactFiles = fs.readdirSync(dir).map((fileName) => {
@@ -29,10 +30,4 @@ export function readPacts(dir: string): Pact[] {
     }
 
     return pactFiles.map(({ pact }) => pact);
-}
-
-export interface Pact {
-    provider?: { name?: string };
-    interactions: Array<unknown>;
-    [x: string]: any;
 }
