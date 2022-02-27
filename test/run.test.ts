@@ -10,18 +10,19 @@ import { validationResultMockFactory } from './mocks/validationResult.mock';
 
 jest.mock('../src/commands/publish');
 jest.mock('axios');
-jest.mock('fs');
 jest.mock('ejs');
 
 describe('run', () => {
     beforeEach(() => {
         jest.spyOn(console, 'error').mockImplementationOnce(jest.fn());
+        jest.spyOn(fs, 'mkdirSync').mockImplementation(jest.fn());
+        jest.spyOn(fs, 'writeFileSync').mockImplementation(jest.fn());
     });
 
-    test('it invokes publish function with correct arguments', () => {
+    test('it invokes publish function with correct arguments', async () => {
         const processMock = processMockFactory.build();
 
-        run(processMock);
+        await run(processMock);
 
         expect(publish).toHaveBeenCalledWith(
             expect.objectContaining({
@@ -69,6 +70,7 @@ describe('run', () => {
             data: validationResultsMock,
         });
         mocked(ejs.renderFile).mockResolvedValueOnce('report content');
+        jest.spyOn(fs, 'existsSync').mockReturnValue(false);
 
         const processMock = processMockFactory.build({
             argv: [
